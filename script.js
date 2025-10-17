@@ -32,50 +32,68 @@ const clickSound = document.getElementById("click-sound");
 const successSound = document.getElementById("success-sound");
 
 let currentQuiz = [];
+let currentQuestion = 0;
+let score = 0;
 
 function startQuiz(type) {
   clickSound.play();
   document.querySelector(".quiz-options").classList.add("hidden");
   document.querySelector(".subtitle").classList.add("hidden");
-  currentQuiz = quizData[type];
   quizSection.classList.remove("hidden");
-  buildQuiz();
+  currentQuiz = quizData[type];
+  currentQuestion = 0;
+  score = 0;
+  showQuestion();
 }
 
-function buildQuiz() {
-  const output = currentQuiz.map((q, i) => {
-    const answers = Object.entries(q.answers)
-      .map(([key, val]) => `
-        <label>
-          <input type="radio" name="question${i}" value="${key}">
+function showQuestion() {
+  const q = currentQuiz[currentQuestion];
+  quizContainer.innerHTML = `
+    <div class="question fade-in">${q.question}</div>
+    <div class="answers fade-in">
+      ${Object.entries(q.answers).map(([key, val]) => `
+        <label class="option">
+          <input type="radio" name="question" value="${key}">
           ${key.toUpperCase()}. ${val}
         </label>
-      `).join('');
-    return `
-      <div class="question fade-in">${q.question}</div>
-      <div class="answers fade-in">${answers}</div>
-    `;
+      `).join('')}
+    </div>
+    <button id="next-btn" class="submit-btn fade-in">Next</button>
+  `;
+
+  const options = document.querySelectorAll(".option");
+  options.forEach(opt => {
+    opt.addEventListener("click", () => {
+      options.forEach(o => o.classList.remove("selected"));
+      opt.classList.add("selected");
+    });
   });
-  quizContainer.innerHTML = output.join('');
+
+  document.getElementById("next-btn").addEventListener("click", nextQuestion);
+}
+
+function nextQuestion() {
+  const selected = document.querySelector("input[name='question']:checked");
+  if (!selected) return;
+
+  if (selected.value === currentQuiz[currentQuestion].correct) score++;
+
+  currentQuestion++;
+  if (currentQuestion < currentQuiz.length) {
+    clickSound.play();
+    showQuestion();
+  } else {
+    showResults();
+  }
 }
 
 function showResults() {
   successSound.play();
-  const answerContainers = quizContainer.querySelectorAll(".answers");
-  let score = 0;
-
-  currentQuiz.forEach((q, i) => {
-    const selected = (answerContainers[i].querySelector(`input[name=question${i}]:checked`) || {}).value;
-    if (selected === q.correct) score++;
-  });
-
-  resultsContainer.innerHTML = `🔥 You scored ${score} / ${currentQuiz.length}`;
-  resultsContainer.classList.add("fade-in");
-
-  shareContainer.innerHTML = `
+  quizContainer.innerHTML = `
+    <h2 class="fade-in">🔥 You scored ${score} / ${currentQuiz.length}</h2>
     <a href="https://twitter.com/intent/tweet?text=I scored ${score}/${currentQuiz.length} in the Gensyn Quiz! ⚡ Try it here #GensynAI #DecentralizedAI" target="_blank">
       <button class="submit-btn fade-in">Share on X</button>
-    </a>`;
+    </a>
+    <button class="submit-btn fade-in" onclick="location.reload()">Back to Home</button>
+  `;
 }
-
-submitButton.addEventListener("click", showResults);
