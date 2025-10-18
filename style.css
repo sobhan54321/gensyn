@@ -1,156 +1,129 @@
-/* ====== GENSYN QUIZ STYLING ====== */
-/*@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');*/
-
+/* ==== Background ==== */
 body {
-  font-family: 'Orbitron', sans-serif;
-  background: radial-gradient(circle at center, #001a1a 0%, #000 100%);
-  color: #00ffc6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow-x: hidden;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: url('gensyn-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fbe9e7;
+  font-family: 'Cinzel Decorative', serif;
+  overflow: hidden;
+  position: relative;
 }
 
-h1 {
-  font-size: 3rem;
-  color: #00ffc6;
-  text-shadow: 0 0 20px #00ffc6;
-  letter-spacing: 3px;
-  margin-bottom: 10px;
-  animation: glow 2s infinite alternate;
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0.9) 80%);
+  mix-blend-mode: screen;
+  animation: pulse 6s infinite alternate;
+  z-index: 0;
 }
 
-.subtitle {
-  font-size: 1.2rem;
-  color: #00e0b0;
-  margin-bottom: 30px;
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 0.8; }
+}
+
+/* ==== Layout ==== */
+.content {
+  position: relative;
+  z-index: 2;
   text-align: center;
-  text-shadow: 0 0 8px #00e0b0;
+  padding-top: 60px;
 }
 
-/* ====== BUTTONS ====== */
-button {
-  background: transparent;
-  border: 2px solid #00ffc6;
-  color: #00ffc6;
-  padding: 12px 28px;
-  font-size: 1rem;
-  font-family: 'Orbitron', sans-serif;
-  border-radius: 12px;
+.title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  color: #00ffe7;
+  text-shadow: 0 0 10px #00ffe7, 0 0 20px #00aaff;
+  margin-bottom: 40px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00ffe7, 0 0 20px #00aaff; }
+  to { text-shadow: 0 0 25px #00ffe7, 0 0 45px #00aaff; }
+}
+
+/* ==== Menu ==== */
+.menu-btn {
+  display: block;
+  margin: 15px auto;
+  padding: 15px 30px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  color: #00ffe7;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid #00ffe7;
+  border-radius: 10px;
   cursor: pointer;
-  margin: 10px;
-  transition: all 0.25s ease-in-out;
-  box-shadow: 0 0 10px #00ffc6;
+  transition: all 0.3s ease;
 }
 
-button:hover {
-  background: #00ffc6;
-  color: #000;
-  transform: scale(1.05);
-  box-shadow: 0 0 25px #00ffc6;
+.menu-btn:hover {
+  background: #00ffe7;
+  color: black;
+  box-shadow: 0 0 15px #00ffe7, 0 0 30px #00aaff;
 }
 
-button:active {
-  transform: scale(0.95);
-  box-shadow: 0 0 15px #00ffc6;
-}
-
-/* ====== QUIZ OPTIONS PAGE ====== */
-.quiz-options {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hidden {
-  display: none;
-}
-
-/* ====== QUIZ SECTION ====== */
-#quiz-section {
-  width: 90%;
-  max-width: 700px;
-  background: rgba(0, 20, 20, 0.8);
-  border: 2px solid #00ffc6;
+/* ==== Quiz ==== */
+.quiz-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #00ffe7;
   border-radius: 20px;
   padding: 30px;
-  text-align: center;
-  box-shadow: 0 0 25px #00ffc6;
+  box-shadow: 0 0 20px #00ffe7;
 }
+
+.hidden { display: none; }
 
 .question {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  color: #fbe9e7;
   margin-bottom: 20px;
-  text-shadow: 0 0 10px #00ffc6;
-}
-
-/* ====== ANSWER OPTIONS ====== */
-.answers {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 25px;
+  font-weight: bold;
 }
 
 .option {
   display: block;
-  width: 100%;
   margin: 10px 0;
-  padding: 15px;
-  border: 2px solid #00ffc6;
-  border-radius: 12px;
+  padding: 10px;
+  border: 1px solid #00ffe7;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.25s ease;
-  font-size: 1rem;
-  background: rgba(0, 255, 198, 0.05);
+  transition: 0.3s;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
 }
 
 .option:hover {
-  background: rgba(0, 255, 198, 0.1);
-  box-shadow: 0 0 10px #00ffc6;
+  background: rgba(0, 255, 231, 0.2);
 }
 
 .option.selected {
-  background: #00ffc6;
+  background: #00ffe7;
   color: #000;
-  font-weight: bold;
-  box-shadow: 0 0 20px #00ffc6;
 }
 
-input[type="radio"] {
-  display: none;
-}
-
-/* ====== RESULTS ====== */
-#results {
-  font-size: 1.4rem;
-  color: #00ffc6;
+.next-btn, .restart-btn {
   margin-top: 20px;
-  text-shadow: 0 0 15px #00ffc6;
+  padding: 12px 25px;
+  background: #00ffe7;
+  border: none;
+  border-radius: 10px;
+  color: #000;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-#share {
-  margin-top: 20px;
-}
-
-/* ====== ANIMATIONS ====== */
-@keyframes glow {
-  from {
-    text-shadow: 0 0 10px #00ffc6, 0 0 20px #00ffc6, 0 0 30px #00ffc6;
-  }
-  to {
-    text-shadow: 0 0 20px #00ffc6, 0 0 30px #00ffc6, 0 0 50px #00ffc6;
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.8s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.next-btn:hover, .restart-btn:hover {
+  background: #00aaff;
+  color: #fff;
 }
