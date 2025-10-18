@@ -1,99 +1,81 @@
-const quizData = {
-  rlswarm: [
-    { question: "What is RL-Swarm?", answers: { a: "A distributed learning protocol", b: "A crypto wallet", c: "A game engine" }, correct: "a" },
-    { question: "Who provides compute in RL-Swarm?", answers: { a: "Validators", b: "Nodes", c: "End-users" }, correct: "b" },
-    { question: "What is the main purpose of RL-Swarm?", answers: { a: "Coordinating decentralized training", b: "File compression", c: "AI image generation" }, correct: "a" },
-    { question: "Which language powers RL-Swarm’s codebase?", answers: { a: "Python", b: "Solidity", c: "Rust" }, correct: "c" },
-    { question: "What ensures fairness in RL-Swarm?", answers: { a: "Verification nodes", b: "Manual voting", c: "Time locks" }, correct: "a" },
-  ],
-  blockassist: [
-    { question: "What is Block Assist?", answers: { a: "A decentralized browser", b: "A Gensyn verification layer", c: "A marketplace for NFTs" }, correct: "b" },
-    { question: "Block Assist ensures what?", answers: { a: "Visual UI consistency", b: "Low latency", c: "Task validity and security" }, correct: "c" },
-    { question: "What does Block Assist interact with?", answers: { a: "Training tasks", b: "Web hosting servers", c: "Email systems" }, correct: "a" },
-    { question: "Which core technology supports Block Assist?", answers: { a: "Quantum computing", b: "Blockchain", c: "SQL databases" }, correct: "b" },
-    { question: "Block Assist contributes to:", answers: { a: "Integrity of training data", b: "Frontend UI", c: "Power management" }, correct: "a" },
-  ],
-  judge: [
-    { question: "Who acts as the 'Judge' in Gensyn?", answers: { a: "The Verifier Node", b: "The Developer", c: "The GPU Miner" }, correct: "a" },
-    { question: "Judge ensures:", answers: { a: "User rewards distribution", b: "Correct model computation", c: "Ad revenue" }, correct: "b" },
-    { question: "Judge nodes help:", answers: { a: "Verify decentralized AI results", b: "Host Gensyn’s website", c: "Generate tokens" }, correct: "a" },
-    { question: "Judges use what for proof?", answers: { a: "Cryptographic checks", b: "Manual reviews", c: "Data sampling" }, correct: "a" },
-    { question: "Judge is part of which layer?", answers: { a: "Verification", b: "Execution", c: "Storage" }, correct: "a" },
-  ]
+const quizzes = {
+  rl: {
+    title: "RL-Swarm Quiz",
+    questions: [
+      { q: "What is RL-Swarm primarily used for?", options: ["AI training", "Crypto trading", "Data mining"], answer: 0 },
+      { q: "Who provides compute in RL-Swarm?", options: ["Validators", "Nodes", "End-users"], answer: 1 },
+      { q: "Main purpose of RL-Swarm?", options: ["Decentralized training", "File compression", "AI image gen"], answer: 0 },
+      { q: "Language powering RL-Swarm?", options: ["Python", "Solidity", "Rust"], answer: 2 },
+      { q: "What ensures fairness?", options: ["Verification nodes", "Block rewards", "Smart contracts"], answer: 0 }
+    ]
+  },
+  block: {
+    title: "Block-Assist Quiz",
+    questions: [
+      { q: "What does Block-Assist help with?", options: ["Smart contract aid", "AI storage", "Training monitoring"], answer: 0 },
+      { q: "Which layer it works on?", options: ["Layer-1", "Layer-2", "Off-chain"], answer: 1 },
+      { q: "Its main utility?", options: ["Automation", "Debugging", "Validation"], answer: 2 },
+      { q: "Reward token?", options: ["GSN", "ETH", "BTC"], answer: 0 },
+      { q: "Who uses Block-Assist?", options: ["Developers", "Validators", "End users"], answer: 0 }
+    ]
+  },
+  judge: {
+    title: "Judge Quiz",
+    questions: [
+      { q: "What is Gensyn Judge?", options: ["AI evaluator", "Node checker", "Reward distributor"], answer: 0 },
+      { q: "Judge runs on?", options: ["On-chain", "Off-chain", "Hybrid"], answer: 2 },
+      { q: "Judges verify?", options: ["Training results", "Payments", "Logs"], answer: 0 },
+      { q: "Judges get reward via?", options: ["Staking", "Validation", "Voting"], answer: 1 },
+      { q: "Final output checked for?", options: ["Accuracy", "Speed", "Storage"], answer: 0 }
+    ]
+  }
 };
 
-const quizContainer = document.getElementById("quiz");
-const resultsContainer = document.getElementById("results");
-const submitButton = document.getElementById("submit");
-const shareContainer = document.getElementById("share");
-const quizSection = document.getElementById("quiz-section");
-
-const clickSound = document.getElementById("click-sound");
-const successSound = document.getElementById("success-sound");
-
-let currentQuiz = [];
-let currentQuestion = 0;
-let score = 0;
+let currentQuiz, currentIndex = 0, score = 0;
 
 function startQuiz(type) {
-  clickSound.play();
-  document.querySelector(".quiz-options").classList.add("hidden");
-  document.querySelector(".subtitle").classList.add("hidden");
-  quizSection.classList.remove("hidden");
-  currentQuiz = quizData[type];
-  currentQuestion = 0;
+  currentQuiz = quizzes[type];
+  document.getElementById('menu').classList.add('hidden');
+  document.getElementById('quiz-container').classList.remove('hidden');
+  document.getElementById('quiz-title').textContent = currentQuiz.title;
+  currentIndex = 0;
   score = 0;
   showQuestion();
 }
 
 function showQuestion() {
-  const q = currentQuiz[currentQuestion];
-  quizContainer.innerHTML = `
-    <div class="question fade-in">${q.question}</div>
-    <div class="answers fade-in">
-      ${Object.entries(q.answers).map(([key, val]) => `
-        <label class="option">
-          <input type="radio" name="question" value="${key}">
-          ${key.toUpperCase()}. ${val}
-        </label>
-      `).join('')}
-    </div>
-    <button id="next-btn" class="submit-btn fade-in">Next</button>
+  const q = currentQuiz.questions[currentIndex];
+  const container = document.getElementById('question-container');
+  container.innerHTML = `
+    <div class="question">${q.q}</div>
+    ${q.options.map((opt, i) => `<div class='option' onclick='selectOption(${i})'>${opt}</div>`).join("")}
   `;
+}
 
-  const options = document.querySelectorAll(".option");
-  options.forEach(opt => {
-    opt.addEventListener("click", () => {
-      options.forEach(o => o.classList.remove("selected"));
-      opt.classList.add("selected");
-    });
-  });
-
-  document.getElementById("next-btn").addEventListener("click", nextQuestion);
+function selectOption(index) {
+  const options = document.querySelectorAll('.option');
+  options.forEach(o => o.classList.remove('selected'));
+  options[index].classList.add('selected');
+  options[index].dataset.selected = "true";
 }
 
 function nextQuestion() {
-  const selected = document.querySelector("input[name='question']:checked");
-  if (!selected) return;
+  const selected = document.querySelector('.option.selected');
+  if (!selected) return alert("Select an answer!");
+  const index = Array.from(document.querySelectorAll('.option')).indexOf(selected);
+  if (index === currentQuiz.questions[currentIndex].answer) score++;
 
-  if (selected.value === currentQuiz[currentQuestion].correct) score++;
-
-  currentQuestion++;
-  if (currentQuestion < currentQuiz.length) {
-    clickSound.play();
+  currentIndex++;
+  if (currentIndex < currentQuiz.questions.length) {
     showQuestion();
   } else {
-    showResults();
+    document.getElementById('quiz-container').classList.add('hidden');
+    document.getElementById('score-container').classList.remove('hidden');
+    document.getElementById('score').textContent = score;
   }
 }
 
-function showResults() {
-  successSound.play();
-  quizContainer.innerHTML = `
-    <h2 class="fade-in">🔥 You scored ${score} / ${currentQuiz.length}</h2>
-    <a href="https://twitter.com/intent/tweet?text=I scored ${score}/${currentQuiz.length} in the Gensyn Quiz! ⚡ Try it here #GensynAI #DecentralizedAI" target="_blank">
-      <button class="submit-btn fade-in">Share on X</button>
-    </a>
-    <button class="submit-btn fade-in" onclick="location.reload()">Back to Home</button>
-  `;
+function restart() {
+  document.getElementById('score-container').classList.add('hidden');
+  document.getElementById('menu').classList.remove('hidden');
 }
