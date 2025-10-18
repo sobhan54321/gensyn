@@ -9,151 +9,100 @@
 body {
   height: 100vh;
   font-family: 'Orbitron', sans-serif;
-  color: #00ffe5;
+  color: #aaa; /* simple gray */
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: url('gensyn-bg.jpg.png') center/cover no-repeat fixed;
 }
 
 .background {
   position: fixed;
   inset: 0;
   z-index: 0;
-  overflow: hidden;
 }
 
-/* Glowing animated grid background */
-.grid {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(#00ffe530 1px, transparent 1px),
-    linear-gradient(90deg, #00ffe530 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: moveGrid 15s linear infinite;
-  opacity: 0.4;
-}
-
-@keyframes moveGrid {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: 60px 60px, 60px 60px; }
-}
-
-/* Overlay glow */
 .overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(0,255,229,0.15), rgba(0,0,0,0.9));
-  backdrop-filter: blur(4px);
-  animation: pulse 4s infinite alternate;
-}
-
-@keyframes pulse {
-  from { opacity: 0.6; }
-  to { opacity: 1; }
+  background: rgba(0,0,0,0.3); /* subtle dark overlay */
+  backdrop-filter: blur(2px);
+  z-index: 1;
 }
 
 .container {
-  text-align: center;
-  z-index: 2;
   position: relative;
+  z-index: 2;
   max-width: 600px;
-  background: rgba(0, 0, 0, 0.55);
+  width: 90%;
+  background: rgba(0,0,0,0.55);
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 0 30px #00ffe5;
+  text-align: center;
 }
 
 .title {
-  font-size: 2.8em;
-  text-shadow: 0 0 30px #00ffe5;
+  font-size: 2.5em;
+  color: #aaa;
   margin-bottom: 30px;
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { text-shadow: 0 0 10px #00ffe5; }
-  to { text-shadow: 0 0 30px #00ffe5, 0 0 60px #00ffe5; }
-}
-
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.btn {
-  background: rgba(0, 255, 229, 0.15);
-  border: 1px solid #00ffe5;
-  color: #00ffe5;
-  font-size: 1.1em;
-  padding: 12px 30px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-}
-
-.btn:hover {
-  background: #00ffe5;
-  color: #000;
-  box-shadow: 0 0 20px #00ffe5;
-}
-
-.hidden {
-  display: none;
 }
 
 #question {
   font-size: 1.6em;
   margin-bottom: 25px;
-  text-shadow: 0 0 15px #00ffe5;
 }
 
 #options {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 20px;
 }
 
 #options button {
-  background: rgba(0, 255, 229, 0.15);
-  border: 1px solid #00ffe5;
-  color: #00ffe5;
+  background: rgba(128, 128, 128, 0.15);
+  border: 1px solid #aaa;
+  color: #aaa;
   font-size: 1.1em;
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 
-#options button:hover {
-  background: #00ffe5;
-  color: #000;
-  box-shadow: 0 0 25px #00ffe5;
-}
-
-/* When an answer is clicked */
+#options button:hover,
 #options button.selected {
-  background: #00ffe5;
+  background: #aaa;
   color: #000;
-  box-shadow: 0 0 25px #00ffe5;
+  box-shadow: none;
 }
 
-#scoreContainer h2 {
-  color: #00ffe5;
-  text-shadow: 0 0 20px #00ffe5;
-  margin-bottom: 20px;
+.btn {
+  padding: 12px 30px;
+  border-radius: 10px;
+  border: 1px solid #aaa;
+  background: rgba(128,128,128,0.15);
+  color: #aaa;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  background: #aaa;
+  color: #000;
 }
 
 .twitter-btn {
   background: #1da1f2;
-  border: none;
   color: #fff;
+  border: none;
 }
 
 .twitter-btn:hover {
   background: #0d8ddb;
-  box-shadow: 0 0 25px #1da1f2;
 }
+
+.hidden { display: none; }
