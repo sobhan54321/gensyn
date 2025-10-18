@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gensyn Quiz</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="background">
-    <div class="grid"></div>
-    <div class="overlay"></div>
-  </div>
+  <div class="overlay"></div>
 
   <div class="container">
-    <h1 class="title">⚡ Gensyn Quiz ⚡</h1>
+    <h1 class="title">Gensyn Quiz</h1>
 
-    <div class="menu">
-      <button class="btn" onclick="startQuiz('rl')">RL Swarm Quiz</button>
-      <button class="btn" onclick="startQuiz('block')">Block Assist Quiz</button>
-      <button class="btn" onclick="startQuiz('judge')">Judge Quiz</button>
+    <div id="quiz-area">
+      <p id="question">Loading question...</p>
+      <div id="options"></div>
+      <button id="next-btn" class="btn hidden">Next</button>
     </div>
 
-    <div id="quizContainer" class="hidden">
-      <div id="question"></div>
-      <div id="options"></div>
-      <button id="nextBtn" class="btn hidden" onclick="nextQuestion()">Next</button>
-
-      <div id="scoreContainer" class="hidden">
-        <h2>Your Score: <span id="score"></span></h2>
-        <button class="btn" onclick="restart()">Restart</button>
-        <button id="shareBtn" class="btn twitter-btn">Share on Twitter</button>
-      </div>
+    <div id="scoreContainer" class="hidden">
+      <h2>Your Score</h2>
+      <p id="scoreText">0 / 0</p>
+      <button id="restartBtn" class="btn">Restart Quiz</button>
+      <a id="twitterShare" class="btn twitter-btn" target="_blank" rel="noopener noreferrer">Share on Twitter</a>
     </div>
   </div>
 
