@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gensyn Quiz</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gensyn AI Quiz</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="background-animation"></div>
-
-  <div class="main-container">
-    <h1 class="title">⚡ Gensyn AI Quiz ⚡</h1>
-    <p class="subtitle">Choose your mission:</p>
-
-    <div class="quiz-options fade-in">
-      <button class="option-btn" onclick="startQuiz('rlswarm')">RL-Swarm Quiz</button>
-      <button class="option-btn" onclick="startQuiz('blockassist')">Block Assist Quiz</button>
-      <button class="option-btn" onclick="startQuiz('judge')">Judge Quiz</button>
+  <div class="content">
+    <h1 class="title">⚡ Gensyn Intelligence Quiz ⚡</h1>
+    <div id="menu" class="menu">
+      <button class="menu-btn" onclick="startQuiz('rl')">RL-Swarm Quiz</button>
+      <button class="menu-btn" onclick="startQuiz('block')">Block-Assist Quiz</button>
+      <button class="menu-btn" onclick="startQuiz('judge')">Judge Quiz</button>
     </div>
 
-    <div id="quiz-section" class="hidden fade-in">
-      <div id="quiz"></div>
-      <button id="submit" class="submit-btn">Submit</button>
-      <div id="results"></div>
-      <div id="share"></div>
+    <div id="quiz-container" class="quiz-container hidden">
+      <h2 id="quiz-title"></h2>
+      <div id="question-container"></div>
+      <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <div id="score-container" class="hidden">
+      <h2>Your Score: <span id="score"></span>/5</h2>
+      <button onclick="restart()" class="restart-btn">Restart</button>
     </div>
   </div>
 
-  <audio id="click-sound" src="sounds/click.mp3" preload="auto"></audio>
-  <audio id="success-sound" src="sounds/success.mp3" preload="auto"></audio>
-
+  <!-- JS -->
   <script src="script.js"></script>
+
+  <!-- Anti-inspect (basic) -->
+  <script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.onkeydown = function(e) {
+      if (e.keyCode == 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) ||
+                                     e.keyCode == 'J'.charCodeAt(0))) ||
+        (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+        return false;
+      }
+    };
+  </script>
 </body>
 </html>
