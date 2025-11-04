@@ -3,30 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gensyn Quiz</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>GENSYN TRAINER</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="overlay"></div>
+  <div class="bg-grid"></div>
+  <header class="site-header">
+    <h1>GENSYN <span>TRAINER</span></h1>
+    <p class="tagline">Learn. Validate. Earn.</p>
+  </header>
 
-  <div class="container">
-    <h1 class="title">Gensyn Quiz</h1>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab active" data-section="rl-swarm" role="tab" aria-selected="true">RL Swarm</button>
+    <button class="tab" data-section="block-assist" role="tab" aria-selected="false">Block Assist</button>
+    <button class="tab" data-section="judge" role="tab" aria-selected="false">Judge</button>
+  </nav>
 
-    <!-- Quiz area -->
-    <div id="quiz-area">
-      <p id="question">Loading question...</p>
-      <div id="options"></div>
-      <button id="next-btn" class="btn hidden">Next</button>
+  <main class="container">
+    <section id="quiz" class="quiz" aria-live="polite">
+      <!-- Questions will be injected here -->
+    </section>
+
+    <div class="controls">
+      <button id="resetBtn" class="btn ghost" type="button">Reset Section</button>
+      <button id="submitBtn" class="btn primary" type="button">Submit Answers</button>
     </div>
 
-    <!-- Score area -->
-    <div id="scoreContainer" class="hidden">
-      <h2>Your Score</h2>
-      <p id="scoreText">0 / 0</p>
-      <button id="restartBtn" class="btn">Restart</button>
-      <a id="twitterShare" class="btn twitter-btn" target="_blank" rel="noopener noreferrer">Share on Twitter</a>
-    </div>
-  </div>
+    <section id="result" class="result" aria-live="polite" hidden>
+      <!-- Score + feedback will appear here -->
+    </section>
+
+    <section id="overall" class="overall">
+      <h2>Overall Progress</h2>
+      <div class="progress-wrap">
+        <div id="overallBar" class="progress-bar" style="width:0%"></div>
+      </div>
+      <p id="overallText">0 / 15 correct</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> GENSYN TRAINER • Orbitron UI</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
